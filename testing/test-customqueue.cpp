@@ -36,7 +36,9 @@ public:
     Produk* head; // Head dari linked list produk
 
     // Konstruktor
-    LinkedListProduk() : head(nullptr) {}
+    LinkedListProduk() {
+        head = nullptr;
+    }
 
     // Destruktor
     // Penting: Destruktor ini akan menghapus semua objek Produk
@@ -178,7 +180,10 @@ private:
 
 public:
     // Konstruktor
-    OrderQueue() : front(nullptr), rear(nullptr) {}
+    OrderQueue() {
+        front = nullptr;
+        rear = nullptr;
+    }
 
     // Destruktor (untuk membersihkan memori semua Order dan Produk di dalamnya)
     ~OrderQueue() {
