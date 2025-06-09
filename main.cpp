@@ -2,6 +2,7 @@
 #include <vector>
 #include "model/User.h"
 #include "controller/ManagerController.h"
+#include "data/ProductStorage.h"
 using namespace std;
 vector<User> ListUser;
 int main(){
@@ -22,7 +23,7 @@ int main(){
             if(loggedIn){
                 cout<< "LOGIN BERHASIL!" <<endl;
                 if(user.getRole() == "manajer"){
-                    ManagerController manager = ManagerController(user.getName());
+                    ManagerController manager = ManagerController(user);
                     manager.run();
                 }else{
                     cout << "KASIR BUKAN GWEJ YG NGURUS, WUAHAHAHAH" << endl;

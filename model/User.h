@@ -1,3 +1,4 @@
+#pragma once
 #include <iostream>
 using namespace std;
 class User{
@@ -13,6 +14,8 @@ class User{
         this->password = password;
         this->role = role;
     }
+    // untuk inisiasi tanpa memasukkan parameter
+    User(){}
     bool login(string username, string password){
         if(this->username == username && this->password == password){
             return true;

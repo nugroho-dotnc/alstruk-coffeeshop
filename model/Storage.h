@@ -1,3 +1,4 @@
+#pragma once
 #include "./Product.h"
 #include <vector>
 using namespace std;
@@ -15,6 +16,7 @@ class Storage{
         this->label = label;
         this->products = prods;
     }
+    Storage(){}
     ~Storage(){
         for(Storage* child : children){
             delete child;

@@ -1,3 +1,4 @@
+#pragma once
 #include "../model/Storage.h"
 class ProductStorage{
     Storage* root;
@@ -14,11 +15,11 @@ class ProductStorage{
 
     Storage* create(string rootLabel){
         if(root != nullptr){
-            cout << "Tree sudah dibuat";
+            cout << "Tree sudah dibuat" << endl;
             return nullptr;
         }
         root = new Storage(rootLabel);
-        cout << "Tree berhasil dibuat";
+        cout << "Tree berhasil dibuat" << endl;
         return root;
     }
 
@@ -34,7 +35,9 @@ class ProductStorage{
         return newStorage;
     }
 
-    void printTree(Storage* node, int indent = 0) const {
+    void printTree(Storage* parent, int indent = 0) const {
+        Storage* node = new Storage();
+        node = parent;
         if (node == nullptr) {
             return;
         }
@@ -58,6 +61,31 @@ class ProductStorage{
             printTree(childNode, indent + 1);
         }
     }
+    // void printTree( int indent = 0) const {
+    //     Storage* node = root;
+    //     if (node == nullptr) {
+    //         return;
+    //     }
+    //     for (int i = 0; i < indent; ++i) {
+    //         cout << "  "; 
+    //     }
+    //     cout << "- " << node->label;
+    //     if (!node->products.empty()) {
+    //         cout << " (Produk: ";
+    //         for (int i = 0; i < node->products.size(); ++i) {
+    //             cout << node->products[i].productName;
+    //             if (i < node->products.size() - 1) {
+    //                 cout << ", ";
+    //             }
+    //         }
+    //         cout << ")";
+    //     }
+    //     cout << endl;
+
+    //     for (Storage* childNode : node->children) {
+    //         printTree(childNode, indent + 1);
+    //     }
+    // }
     Storage* _searchByLabel(Storage* currentNode, const string& targetLabel) const {
         if (currentNode == nullptr) {
             return nullptr; 
@@ -89,7 +117,7 @@ class ProductStorage{
         }
         return result;
     }
-    void addProduct(Storage*& parent, vector<Product> products){
+    void addProduct(Storage* parent, vector<Product> products){
         if(products.empty()){
             cout << "PRODUCT KOSONG" << endl;
             return;
@@ -97,8 +125,9 @@ class ProductStorage{
         for(Product prod: products){
             parent->products.push_back(prod);
         }
+        cout << "Product berhasil ditambahkan!" << endl;
     }
-    void addCategory(Storage*& parent, string label){
+    void addCategory(Storage* parent, string label){
         Storage* newNode = new Storage(label);
         newNode->parent = parent;
         newNode->children = {};
@@ -141,10 +170,25 @@ class ProductStorage{
             cout << "product dengan id "  << idProduct << " berhasil dihapus!" << endl;
         }
     }
+    // label disini sama dengan kategori
+    Product findProduct(string label, string idProduct){
+        Product product;
+        Storage* storage = searchByLabel(label);
+        for(Product prod: storage->products){
+            if(prod.idProduct == idProduct){
+                product = prod;
+                break;
+            }
+        }
+        return product;
+    }
 };
 
 // contoh penggunaan
 // int main(){
+//     vector<Product> listProduct = {};
+//     listProduct.push_back({ "anu goreng", "ID003", 40000 });
+//     listProduct.push_back({"babang goreng", "ID005", 40000});
 //     ProductStorage ProductStorage;
 //     Storage* menuRoot = ProductStorage.create("menu");
 //     Storage* food = ProductStorage.insert(menuRoot, "food");
@@ -152,7 +196,7 @@ class ProductStorage{
 //     Storage* drink = ProductStorage.insert(menuRoot, "drink");
 //     ProductStorage.printTree(menuRoot);
 //     Storage* found = ProductStorage.searchByLabel("berat");
-//     ProductStorage.addProduct(found,  {{ "anu goreng", "ID003", 40000 }, { "nasi goyang", "ID004", 30000 }});
+//     ProductStorage.addProduct(found,  listProduct);
 //     Storage* category_found = ProductStorage.searchByLabel("food");
 //     ProductStorage.addCategory(category_found, "ringan");
 //     ProductStorage.printTree(menuRoot);

@@ -4,20 +4,21 @@
 using namespace std;
 class ManagerController{
     private:
-    string name;
+    User user;
     public:
-    ManagerController(string name){
-        this->name = name;
+    ManagerController(User& user){
+      this->user = user;
     }
     void run(){
         ManagerView view = ManagerView();
+        ProductController productController;
         bool status1  = false;
         while(!status1){
-             int pilihan = view.menu(name);
+             int pilihan = view.menu(user.getName());
              switch (pilihan)
              {
              case 1:
-                
+                productController.run();
                 break;
              case 2:
                 break;
