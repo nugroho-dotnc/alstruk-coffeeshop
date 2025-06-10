@@ -1,12 +1,21 @@
 #include<iostream>
 #include<string>
-#include "testing-farrel-linkedlist.h"
+#include<vector>
 using namespace std;
+
+struct Product {
+    string productName;
+    // string idProduct;
+    float harga;
+    int qty;
+    Product(string name, float price, int quantity) : productName(name), harga(price), qty(quantity) {}
+
+};
 
 struct QueueNode {
     string label;
-    Order order;
     QueueNode *next;
+    vector<Product> transactions;
 };
 
 class OrderQueue {
@@ -43,14 +52,13 @@ class OrderQueue {
                 cin >> qty;
                 cout << "Masukan harga : ";
                 cin >> price;
-                q->order.addOrder(orderMenu, qty, price);
                 cout << "Apakah ada lagi? (Y/N) : ";
                 cin >> addMoreChoice;
+                q->transactions.push_back(Product(orderMenu, price, qty));
                 (addMoreChoice == 'Y') ? addMore = true : addMore = false;
             }
-
-
             q->label = qLabel;
+
             if(isEmpty()) {
                 front = back = q;
             } else {
@@ -80,17 +88,19 @@ class OrderQueue {
         } 
 
         void display() {
-        if (isEmpty()) {
-            cout << "Queue Kosong" << endl;
-            return;
-        }
+            if (isEmpty()) {
+                cout << "Queue Kosong" << endl;
+                return;
+            }
 
-        QueueNode* current = front;
-        int index = 1;
-        while (current != nullptr) {
-            cout << "Antrian ke-" << index++ << " : " << current->label << endl;
-            current->order.display();
-            current = current->next;
+            QueueNode* current = front;
+            int index = 1;
+            while (current != nullptr) {
+                cout << "Antrian ke-" << index++ << " : " << current->label << endl;
+                for(Product item : current->transactions) {
+                    cout << "Item : " << item.productName << " | Rp." << item.harga << " | " << item.qty << " | " << item.harga * item.qty << endl;
+                }
+                current = current->next;
         }
     }
 
@@ -100,6 +110,7 @@ class OrderQueue {
 int main() {
     OrderQueue q;
 
+    q.enqueue();
     q.enqueue();
     cout << endl;
     q.display();
