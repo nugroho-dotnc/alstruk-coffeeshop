@@ -21,12 +21,14 @@ class ManagerController{
                 productController.run();
                 break;
              case 2:
+                cout << "Fitur belum dibuat" << endl;
                 break;
-             case 3:
-                break;
-             case 4:
+             case 0:
+                cout << "Terimakasih, Samapai Jumpa Kembali!" << endl;
+                status1 = true;
                 break;
              default:
+               cout<< "Input tidak valid, coba lagi!" << endl;
                 break;
              }
         }

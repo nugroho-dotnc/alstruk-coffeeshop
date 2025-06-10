@@ -23,7 +23,7 @@ class ProductStorage{
         return root;
     }
 
-    Storage* insert(Storage*& parent, string label, vector<Product> prods = {}){
+    Storage* insert(Storage*& parent, string label, vector<Product*> prods = {}){
         Storage* newStorage;
         if(!prods.empty()){
             newStorage = new Storage(label, prods);
@@ -44,19 +44,15 @@ class ProductStorage{
         for (int i = 0; i < indent; ++i) {
             cout << "  "; 
         }
-        cout << "- " << node->label;
+        cout << "- " << node->label << ":" << endl;
         if (!node->products.empty()) {
-            cout << " (Produk: ";
-            for (int i = 0; i < node->products.size(); ++i) {
-                cout << node->products[i].productName;
-                if (i < node->products.size() - 1) {
-                    cout << ", ";
+            for (Product* p: node->products) {
+                for (int i = 0; i < indent + 2; ++i) {
+                    cout << "  "; 
                 }
+                cout << p->idProduct << " - " << p->productName << " - " << p->price << endl;
             }
-            cout << ")";
         }
-        cout << endl;
-
         for (Storage* childNode : node->children) {
             printTree(childNode, indent + 1);
         }
@@ -117,12 +113,12 @@ class ProductStorage{
         }
         return result;
     }
-    void addProduct(Storage* parent, vector<Product> products){
+    void addProduct(Storage* parent, vector<Product*> products){
         if(products.empty()){
             cout << "PRODUCT KOSONG" << endl;
             return;
         }
-        for(Product prod: products){
+        for(Product* prod: products){
             parent->products.push_back(prod);
         }
         cout << "Product berhasil ditambahkan!" << endl;
@@ -158,8 +154,8 @@ class ProductStorage{
         }
         int position = 0;
         bool found = false;
-        for(Product product : parentNode->products){
-            if(product.idProduct == idProduct){
+        for(Product* product : parentNode->products){
+            if(product->idProduct == idProduct){
                 found = true;
                 break;
             }
@@ -168,14 +164,16 @@ class ProductStorage{
         if(found){
             parentNode->products.erase(parentNode->products.begin() + position);
             cout << "product dengan id "  << idProduct << " berhasil dihapus!" << endl;
+        }else{
+             cout << "product dengan id "  << idProduct << " tidak ditemukan!" << endl;
         }
     }
     // label disini sama dengan kategori
-    Product findProduct(string label, string idProduct){
-        Product product;
+    Product* findProduct(string label, string idProduct){
+        Product* product;
         Storage* storage = searchByLabel(label);
-        for(Product prod: storage->products){
-            if(prod.idProduct == idProduct){
+        for(Product* prod: storage->products){
+            if(prod->idProduct == idProduct){
                 product = prod;
                 break;
             }

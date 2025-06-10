@@ -5,11 +5,11 @@ class Product{
     public:
     string productName;
     string idProduct;
-    float harga;
-    Product(const string& name, const string& id, float price){
+    float price;
+    Product(const string& name, const string& id, float harga){
         productName = name;
         idProduct = id;
-        harga = price;
+        price = harga;
     }
     // untuk inisiasi tanpa memasukkan parameter
     Product(){}

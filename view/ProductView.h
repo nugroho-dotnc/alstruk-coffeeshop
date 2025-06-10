@@ -3,9 +3,7 @@
 using namespace std;
 class ProductView{
     public:
-    int menu(ProductStorage productStorage, Storage* menuRoot){
-        cout << "DATA PRODUCT:" << endl;
-        productStorage.printTree(menuRoot);
+    void menu(){
         cout << "===================" << endl;
         cout << "MENU KELOLA PRODUK" << endl;
         cout << "===================" << endl;
@@ -15,11 +13,6 @@ class ProductView{
         cout << "[4] Tambah Kategori" << endl;
         cout << "[5] Hapus Kategori" << endl;
         cout << "[0] Keluar" << endl;
-        int opsi;
-        cout << "Pilihan Anda: "; cin >> opsi;
-        cin.ignore();
-        cout << endl;
-        return opsi;
     };
     Product addProductView() {
         Product product;
@@ -35,10 +28,10 @@ class ProductView{
         getline(cin, harga);
 
         try {
-            product.harga = stof(harga);
+            product.price = stof(harga);
         } catch (...) {
             cout << "Harga tidak valid!" << endl;
-            product.harga = 0;
+            product.price = 0;
         }
 
         return product;
