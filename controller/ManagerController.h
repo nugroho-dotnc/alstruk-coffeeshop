@@ -5,20 +5,21 @@ using namespace std;
 class ManagerController{
     private:
     User user;
+    ProductController* productController;
     public:
-    ManagerController(User& user){
+    ManagerController(User& user, ProductController* productController){
+      this->productController = productController;
       this->user = user;
     }
     void run(){
         ManagerView view = ManagerView();
-        ProductController productController;
         bool status1  = false;
         while(!status1){
              int pilihan = view.menu(user.getName());
              switch (pilihan)
              {
              case 1:
-                productController.run();
+                productController->run();
                 break;
              case 2:
                 cout << "Fitur belum dibuat" << endl;

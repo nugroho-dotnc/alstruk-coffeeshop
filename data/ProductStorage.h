@@ -1,5 +1,7 @@
 #pragma once
 #include "../model/Storage.h"
+#include <vector>
+
 class ProductStorage{
     Storage* root;
     public:
@@ -57,31 +59,23 @@ class ProductStorage{
             printTree(childNode, indent + 1);
         }
     }
-    // void printTree( int indent = 0) const {
-    //     Storage* node = root;
-    //     if (node == nullptr) {
-    //         return;
-    //     }
-    //     for (int i = 0; i < indent; ++i) {
-    //         cout << "  "; 
-    //     }
-    //     cout << "- " << node->label;
-    //     if (!node->products.empty()) {
-    //         cout << " (Produk: ";
-    //         for (int i = 0; i < node->products.size(); ++i) {
-    //             cout << node->products[i].productName;
-    //             if (i < node->products.size() - 1) {
-    //                 cout << ", ";
-    //             }
-    //         }
-    //         cout << ")";
-    //     }
-    //     cout << endl;
-
-    //     for (Storage* childNode : node->children) {
-    //         printTree(childNode, indent + 1);
-    //     }
-    // }
+    Storage* clusterSearch(Storage* currentNode, string targetLabel){
+        
+    }
+    Storage* searchInParent(Storage* currentNode,  string targetLabel){
+        if(currentNode == nullptr){
+            return nullptr;
+        }
+        if (currentNode->label == targetLabel) {
+            return currentNode; 
+        }
+        for (Storage* childNode : currentNode->children) {
+            if (childNode->label == targetLabel) {
+                return childNode; 
+            }
+        }
+        return nullptr; 
+    }
     Storage* _searchByLabel(Storage* currentNode, const string& targetLabel) const {
         if (currentNode == nullptr) {
             return nullptr; 
