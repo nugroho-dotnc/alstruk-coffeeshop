@@ -38,30 +38,70 @@ class ProductStorage{
     }
 
     void printTree(Storage* parent, int indent = 0) const {
-        Storage* node = new Storage();
-        node = parent;
-        if (node == nullptr) {
-            return;
-        }
-        for (int i = 0; i < indent; ++i) {
-            cout << "  "; 
-        }
-        cout << "- " << node->label << ":" << endl;
-        if (!node->products.empty()) {
-            for (Product* p: node->products) {
-                for (int i = 0; i < indent + 2; ++i) {
-                    cout << "  "; 
+            Storage* node = new Storage();
+            node = parent;
+            if (node == nullptr) {
+                return;
+            }
+            for (int i = 0; i < indent; ++i) {
+                cout << "  "; 
+            }
+            cout << "- " << node->label << ":" << endl;
+            if (!node->products.empty()) {
+                for (Product* p: node->products) {
+                    for (int i = 0; i < indent + 2; ++i) {
+                        cout << "  "; 
+                    }
+                    cout << p->idProduct << " - " << p->productName << " - " << p->price << endl;
                 }
-                cout << p->idProduct << " - " << p->productName << " - " << p->price << endl;
+            }
+            for (Storage* childNode : node->children) {
+                printTree(childNode, indent + 1);
             }
         }
-        for (Storage* childNode : node->children) {
-            printTree(childNode, indent + 1);
+    
+    void printPath(vector<string> path){
+        cout << "Path: menu -> ";
+        for (const string& s : path) {
+            cout << s << " -> ";
         }
+        cout << endl;
     }
-    Storage* clusterSearch(Storage* currentNode, string targetLabel){
-        
+    Storage* clusterSearch(Storage* currentNode) {
+        vector<string> path;
+        Storage* foundStorage = nullptr;
+        bool searchActive = true;
+        while (searchActive) {
+            string label;
+            cout << "Masukkan kategori: ";
+            getline(cin, label);
+            
+            foundStorage = searchInParent(currentNode, label);
+            if (foundStorage != nullptr) {
+                path.push_back(foundStorage->label);
+                currentNode = foundStorage;
+                printPath(path);
+                if (!currentNode->children.empty()) {
+                    char lanjut;
+                    cout << "Apakah ingin mencari subkategori dari \"" << currentNode->label << "\"? (y/n): ";
+                    cin >> lanjut;
+                    cin.ignore(); // Buang newline dari buffer
+
+                    if (tolower(lanjut) != 'y') {
+                        searchActive = false;
+                    }
+                } else {
+                    cout << "Kategori ditemukan, Tidak ada subkategori dari \"" << currentNode->label << "\".\n";
+                    searchActive = false;
+                }
+            } else {
+                cout << "Kategori \"" << label << "\" tidak ditemukan di level ini. Coba lagi.\n";
+            }
+        }
+
+        return foundStorage;
     }
+
     Storage* searchInParent(Storage* currentNode,  string targetLabel){
         if(currentNode == nullptr){
             return nullptr;
@@ -124,11 +164,10 @@ class ProductStorage{
         parent->children.push_back(newNode);
     }
 
-    void deleteCategory(string label){
-        Storage* tempNode = searchByLabel(label);
+    void deleteCategory(string label, Storage* tempNode){
         int position = 0;
         bool found = false;
-        for(Storage* storage : tempNode->parent->children){
+        for(Storage* storage : tempNode->children){
             if(storage->label == label){
                 found = true;
                 break;
@@ -136,7 +175,7 @@ class ProductStorage{
             position++;
         }
         if(found){
-            tempNode->parent->children.erase(tempNode->parent->children.begin() + position);
+            tempNode->children.erase(tempNode->children.begin() + position);
             cout << "Kategori dengan nama: " << label << " Berhasil dihapus!" << endl; 
         }
     }

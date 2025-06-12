@@ -11,6 +11,7 @@ int main(){
 
     // membuat tree baru
     ProductStorage* productStorage = new ProductStorage();
+
     Storage* menuRoot;
     menuRoot = productStorage->create("menu");
     Storage* food = productStorage->insert(menuRoot, "food");
