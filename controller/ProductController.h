@@ -18,9 +18,9 @@ class ProductController{
     void run(){
         bool status = false;
         while(!status){
-             cout << "DATA PRODUCT:" << endl;
-             productStorage.printTree(menuRoot); 
-             productView.menu();
+            cout << "DATA PRODUCT:" << endl;
+            productStorage.printTree(menuRoot); 
+            productView.menu();
             int opsi;
             cout << "Pilihan Anda: "; cin >> opsi;
             cin.ignore();
