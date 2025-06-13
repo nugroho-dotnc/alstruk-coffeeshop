@@ -1,5 +1,5 @@
+#pragma once
 #include <iostream>
-#include "../data/ProductStorage.h"
 using namespace std;
 class ProductView{
     public:

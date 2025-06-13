@@ -1,19 +1,17 @@
+#pragma once
 #include <iostream>
 #include "../view/ProductView.h"
 #include <vector>
 using namespace std;
 class ProductController{
     private:
-        ProductStorage* productStorage = new ProductStorage();
+        ProductTree* productStorage;
         ProductView productView;
         Storage* menuRoot;
     public:
-        ProductController(Storage* root){
+        ProductController( Storage* root, ProductTree* productStorage ){
             this->menuRoot = root;
-            // menuRoot = productStorage->create("menu");
-            Storage* food = productStorage->insert(menuRoot, "food");
-            productStorage->insert(food, "berat", {new Product("Ikan Goreng", "ID001", 12000), new Product("Ikan Goreng Cipundung", "ID002", 10000)});
-            Storage* drink = productStorage->insert(menuRoot, "drink");
+            this->productStorage = productStorage;
         }
         void run(){
             bool status = false;

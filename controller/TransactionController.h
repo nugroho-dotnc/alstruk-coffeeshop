@@ -1,7 +1,8 @@
+#pragma once
 #include<iostream>
 #include "../model/Queue.h"
 #include "../model/Storage.h"
-#include "../data/ProductStorage.h"
+#include "../data/ProductTree.h"
 #include "../data/QueueList.h"
 using namespace std;
 
@@ -9,7 +10,7 @@ class TransactionController {
     private :
         Queue *q; 
         Storage *ps;
-        ProductStorage *productStorage = new ProductStorage();
+        ProductTree *productStorage = new ProductTree();
     public : 
         TransactionController(Queue *queue, Storage *ps) {
             this->q = queue;

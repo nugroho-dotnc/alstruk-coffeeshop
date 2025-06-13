@@ -2,13 +2,13 @@
 #include "../model/Storage.h"
 #include <vector>
 
-class ProductStorage{
+class ProductTree{
     Storage* root;
     public:
-     ProductStorage(){
+     ProductTree(){
         root = nullptr;
     }
-    ~ProductStorage() {
+    ~ProductTree() {
         if (root != nullptr) {
             delete root; 
             root = nullptr;
