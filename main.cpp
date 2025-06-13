@@ -9,16 +9,12 @@ int main(){
     // INI LOGIN SEMENTARA, BUAT BAYANGAN GW AJA (NUGI)
     // ntar semisal udah ada versi fixnya (dari sello) bisa diganti logicnya
 
-    // membuat tree baru
-    Storage* menuRoot; //STRUKTUR
-    ProductStorage* productStorage = new ProductStorage(); //METHOOD
-    menuRoot = productStorage->create("menu");
-    Storage* food = productStorage->insert(menuRoot, "food");
-    productStorage->insert(food, "berat", {new Product("Ikan Goreng", "ID001", 12000), new Product("Ikan Goreng Cipundung", "ID002", 10000)});
-    Storage* drink = productStorage->insert(menuRoot, "drink");
+    // deklarasi data baru
+    Storage* menuRoot = nullptr;
+   
 
     // inisialisasi controller
-    ProductController* productController = new ProductController(productStorage, menuRoot);
+    ProductController* productController = new ProductController( menuRoot);
 
 
     User user1 = User("nugroho", "manajer", "manajer", "manajer");

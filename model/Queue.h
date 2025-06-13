@@ -1,17 +1,24 @@
+#pragma once
 #include <string>
-#include<vector>
+#include <vector>
 #include "Product.h"
-using namespace std;
 
-class Queue {
-    public :   
-        Queue* next;
-        string queueLabel;
-        vector<Product> productList;
+// Menyimpan data produk + quantity dalam satu pesanan
+struct ProductOrder {
+    Product* product;
+    int quantity;
+};
 
-        Queue(string label) {
-            this->queueLabel = label;
-            this->next = nullptr;
-            // this->productList = productList;
-        }
+// Menyimpan transaksi pelanggan
+struct Transaction {
+    std::string transactionId;
+    time_t timestamp;
+    std::vector<ProductOrder> productList;
+    double totalAmount;
+};
+
+// Node antrian (linked list)
+struct QueueNode {
+    Transaction data;
+    QueueNode* next;
 };
