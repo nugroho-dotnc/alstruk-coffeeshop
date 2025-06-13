@@ -1,15 +1,17 @@
 #pragma once
 #include "../model/Queue.h"
 #include <iostream>
+#include <vector>
+using namespace std;
 
 class QueueList {
 private:
-    QueueNode* head;
-    QueueNode* tail;
+    Queue* head;
+    Queue* tail;
     int maxSize;
 
 public:
-    QueueList(int maxSize = 100) {
+    QueueList(int maxSize = 8) {
         this->head = nullptr;
         this->tail = nullptr;
         this->maxSize = maxSize;
@@ -25,7 +27,7 @@ public:
 
     int count() {
         int total = 0;
-        QueueNode* current = head;
+        Queue* current = head;
         while (current != nullptr) {
             total++;
             current = current->next;
@@ -33,13 +35,13 @@ public:
         return total;
     }
 
-    void enqueue(Transaction trx) {
+    void enqueue(string label, vector<Product*> products) {
         if (isFull()) {
-            std::cout << "Antrean penuh, tidak bisa menambahkan transaksi!\n";
+            cout << "Antrean penuh, tidak bisa menambahkan transaksi!\n";
             return;
         }
 
-        QueueNode* newNode = new QueueNode{trx, nullptr};
+        Queue* newNode = new Queue(label, products);
 
         if (isEmpty()) {
             head = tail = newNode;
@@ -48,54 +50,53 @@ public:
             tail = newNode;
         }
 
-        std::cout << "Transaksi " << trx.transactionId << " berhasil ditambahkan ke antrean.\n";
+        cout << "Transaksi \"" << label << "\" berhasil ditambahkan ke antrean.\n";
     }
 
-    Transaction dequeue() {
+    Queue* dequeue() {
         if (isEmpty()) {
-            std::cout << "Antrean kosong!\n";
-            return Transaction(); // Kembalikan objek kosong
+            cout << "Antrean kosong!\n";
+            return nullptr;
         }
 
-        QueueNode* temp = head;
-        Transaction data = temp->data;
+        Queue* removed = head;
         head = head->next;
         if (head == nullptr) {
             tail = nullptr;
         }
-        delete temp;
 
-        std::cout << "Transaksi " << data.transactionId << " dikeluarkan dari antrean.\n";
-        return data;
+        cout << "Transaksi \"" << removed->label << "\" dikeluarkan dari antrean.\n";
+        return removed;
     }
 
     void display() {
         if (isEmpty()) {
-            std::cout << "Antrean kosong!\n";
+            cout << "Antrean kosong!\n";
             return;
         }
 
-        QueueNode* current = head;
-        std::cout << "Daftar Transaksi dalam Antrean:\n";
+        Queue* current = head;
+        cout << "Daftar Transaksi dalam Antrean:\n";
         while (current != nullptr) {
-            std::cout << "- Kode Transaksi: " << current->data.transactionId
-                      << ", Total: " << current->data.totalAmount << "\n";
+            cout << "- Kode Transaksi: " << current->label
+                    << ", Jumlah Produk: " << current->products.size() << "\n";
             current = current->next;
         }
     }
 
     void destroy() {
         while (!isEmpty()) {
-            dequeue();
+            Queue* temp = dequeue();
+            delete temp;
         }
-        std::cout << "Semua transaksi dalam antrean telah dihapus.\n";
+        cout << "Semua transaksi dalam antrean telah dihapus.\n";
     }
 
-    Transaction peek() {
-    if (isEmpty()) {
-        std::cout << "Antrean kosong!\n";
-        return Transaction(); // atau throw exception
+    Queue* peek() {
+        if (isEmpty()) {
+            cout << "Antrean kosong!\n";
+            return nullptr;
+        }
+        return head;
     }
-    return head->data;
-  }
 };
