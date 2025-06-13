@@ -4,13 +4,16 @@
 using namespace std;
 class ProductController{
     private:
-    ProductStorage* productStorage;
+    ProductStorage* productStorage = new ProductStorage();
     ProductView productView;
     Storage* menuRoot;
     public:
-    ProductController(ProductStorage* productStorage, Storage* menuRoot){
-       this->productStorage = productStorage;
-       this->menuRoot = menuRoot;
+    ProductController( Storage* root){
+        this->menuRoot = root;
+        menuRoot = productStorage->create("menu");
+        Storage* food = productStorage->insert(menuRoot, "food");
+        productStorage->insert(food, "berat", {new Product("Ikan Goreng", "ID001", 12000), new Product("Ikan Goreng Cipundung", "ID002", 10000)});
+        Storage* drink = productStorage->insert(menuRoot, "drink");
     }
     void run(){
         bool status = false;

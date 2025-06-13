@@ -116,46 +116,27 @@ class ProductStorage{
         }
         return nullptr; 
     }
-    Storage* _searchByLabel(Storage* currentNode, const string& targetLabel) const {
-        if (currentNode == nullptr) {
-            return nullptr; 
-        }
-        if (currentNode->label == targetLabel) {
-            return currentNode; 
-        }
-        
-        for (Storage* childNode : currentNode->children) {
-            Storage* foundNode = _searchByLabel(childNode, targetLabel);
-            if (foundNode != nullptr) {
-                return foundNode; 
-            }
-        }
-        
-        return nullptr; 
-    }
-    Storage* searchByLabel(const string& targetLabel) const {
-        if (root == nullptr) {
-            cout << "Tree kosong. Tidak bisa mencari." << endl;
-            return nullptr;
-        }
-        cout << "Mencari node dengan label '" << targetLabel << "'..." << endl;
-        Storage* result = _searchByLabel(root, targetLabel);
-        if (result != nullptr) {
-            cout << "Node dengan label '" << targetLabel << "' ditemukan!" << endl;
-        } else {
-            cout << "Node dengan label '" << targetLabel << "' tidak ditemukan." << endl;
-        }
-        return result;
-    }
     void addProduct(Storage* parent, vector<Product*> products){
         if(products.empty()){
             cout << "PRODUCT KOSONG" << endl;
             return;
         }
         for(Product* prod: products){
-            parent->products.push_back(prod);
+            bool found = false;
+            for(Product* existedProd: parent->products){
+                if(prod->idProduct == existedProd->idProduct){
+                    found = true;
+                    break;
+                }
+            }
+            if(!found){
+                parent->products.push_back(prod);
+                cout << "produk dengan id " << prod->idProduct << " berhasil ditambahkan!" << endl;
+            }else{
+                cout << "produk dengan id " << prod->idProduct << " sudah ada!" << endl;
+            }
+            
         }
-        cout << "Product berhasil ditambahkan!" << endl;
     }
     void addCategory(Storage* parent, string label){
         Storage* newNode = new Storage(label);
@@ -200,18 +181,6 @@ class ProductStorage{
         }else{
              cout << "product dengan id "  << idProduct << " tidak ditemukan!" << endl;
         }
-    }
-    // label disini sama dengan kategori
-    Product* findProduct(string label, string idProduct){
-        Product* product;
-        Storage* storage = searchByLabel(label);
-        for(Product* prod: storage->products){
-            if(prod->idProduct == idProduct){
-                product = prod;
-                break;
-            }
-        }
-        return product;
     }
 };
 
