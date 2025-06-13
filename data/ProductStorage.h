@@ -184,26 +184,36 @@ class ProductStorage{
              cout << "product dengan id "  << idProduct << " tidak ditemukan!" << endl;
         }
     }
+    Product* getProductById(Storage* menuRoot){
+        Storage* parentProduct = clusterSearch(menuRoot);
+        string idProduct;
+        cout << "Masukkan ID Produk: ";
+        getline(cin, idProduct);
+        if(parentProduct->products.empty()){
+            cout << "tidak terdapat produk dengan kategori: " << parentProduct->label << endl;
+            return nullptr;
+        }
+        for(Product* prod: parentProduct->products){
+            if(prod->idProduct == idProduct){
+                cout << "product dengan id: " << idProduct << " ditemukan!" << endl;
+                return prod;
+            }
+        }
+        cout << "product dengan id: "  << idProduct << " tidak ditemukan!" << endl;
+        return nullptr;
+    }
 };
 
-// contoh penggunaan
 // int main(){
-//     vector<Product> listProduct = {};
-//     listProduct.push_back({ "anu goreng", "ID003", 40000 });
-//     listProduct.push_back({"babang goreng", "ID005", 40000});
-//     ProductStorage ProductStorage;
-//     Storage* menuRoot = ProductStorage.create("menu");
-//     Storage* food = ProductStorage.insert(menuRoot, "food");
-//     ProductStorage.insert(food, "berat", {{ "kentang goreng", "ID001", 20000 }, { "nasi goreng", "ID002", 25000 }});
-//     Storage* drink = ProductStorage.insert(menuRoot, "drink");
-//     ProductStorage.printTree(menuRoot);
-//     Storage* found = ProductStorage.searchByLabel("berat");
-//     ProductStorage.addProduct(found,  listProduct);
-//     Storage* category_found = ProductStorage.searchByLabel("food");
-//     ProductStorage.addCategory(category_found, "ringan");
-//     ProductStorage.printTree(menuRoot);
-//     ProductStorage.deleteProduct(found, "ID004");
-//     ProductStorage.deleteCategory("drink");
-//     ProductStorage.printTree(menuRoot);
+//     ProductStorage* productStorage = new ProductStorage();
+//     Storage* menuRoot = productStorage->create("menu");
+//     Storage* food = productStorage->insert(menuRoot, "food");
+//     productStorage->insert(food, "berat", {new Product("Ikan Goreng", "ID001", 12000), new Product("Ikan Goreng Cipundung", "ID002", 10000)});
+//     Storage* drink = productStorage->insert(menuRoot, "drink");
+//     productStorage->printTree(menuRoot);
+    
+//     // contoh penggunaan getproductById
+//     Product* product = productStorage->getProductById(menuRoot);
+//     cout << product->idProduct << " - " << product->productName << " - " << product->price << endl;
 //     return 0;
 // }
