@@ -14,7 +14,7 @@ int main(){
    
 
     // inisialisasi controller
-    ProductController* productController = new ProductController( menuRoot);
+    ProductController* productController = new ProductController(menuRoot);
 
 
     User user1 = User("nugroho", "manajer", "manajer", "manajer");

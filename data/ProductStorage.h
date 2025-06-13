@@ -67,6 +67,7 @@ class ProductStorage{
         }
         cout << endl;
     }
+
     Storage* clusterSearch(Storage* currentNode) {
         vector<string> path;
         Storage* foundStorage = nullptr;
@@ -116,6 +117,7 @@ class ProductStorage{
         }
         return nullptr; 
     }
+    
     void addProduct(Storage* parent, vector<Product*> products){
         if(products.empty()){
             cout << "PRODUCT KOSONG" << endl;
