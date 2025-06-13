@@ -1,8 +1,7 @@
 #pragma once
 #include "../model/Queue.h"
 #include <iostream>
-#include <vector>
-using namespace std;
+using namespace std; 
 
 class QueueList {
 private:
@@ -78,8 +77,7 @@ public:
         Queue* current = head;
         cout << "Daftar Transaksi dalam Antrean:\n";
         while (current != nullptr) {
-            cout << "- Kode Transaksi: " << current->label
-                    << ", Jumlah Produk: " << current->products.size() << "\n";
+            std::cout << "- Kode Transaksi: " << current->data.transactionId << ", Total: " << current->data.totalAmount << "\n";
             current = current->next;
         }
     }
