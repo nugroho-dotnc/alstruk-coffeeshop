@@ -34,7 +34,7 @@ public:
         return total;
     }
 
-    void enqueue(string label, vector<Product*> products) {
+    void enqueue(string label, vector<Product> products) {
         if (isFull()) {
             cout << "Antrean penuh, tidak bisa menambahkan transaksi!\n";
             return;
@@ -98,3 +98,4 @@ public:
         return head;
     }
 };
+

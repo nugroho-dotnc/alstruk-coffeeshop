@@ -1,8 +1,10 @@
 #include <iostream>
 #include <vector>
 #include "model/User.h"
+#include "model/Queue.h"
 #include "controller/ManagerController.h"
 #include "data/ProductStorage.h"
+#include "controller/TransactionController.h"
 using namespace std;
 vector<User> ListUser;
 int main(){
@@ -10,12 +12,12 @@ int main(){
     // ntar semisal udah ada versi fixnya (dari sello) bisa diganti logicnya
 
     // deklarasi data baru
-    Storage* menuRoot = nullptr;
-   
+    Storage *menuRoot = nullptr;
+    Queue* queue = nullptr;
+    ProductStorage *ps; 
 
     // inisialisasi controller
     ProductController* productController = new ProductController(menuRoot);
-
 
     User user1 = User("nugroho", "manajer", "manajer", "manajer");
     User user2 = User("farrel", "kasir", "kasir123", "kasir");
@@ -35,10 +37,29 @@ int main(){
                     ManagerController manager = ManagerController(user, productController);
                     manager.run();
                 }else{
-                    cout << "KASIR BUKAN GWEJ YG NGURUS, WUAHAHAHAH" << endl;
+                    ps->printTree(menuRoot);
                 }
             }
         }
     }
     return 0;
 }
+
+// int main() {
+//     ProductStorage* ps = new ProductStorage();
+//     Queue* queue = nullptr;
+//     Storage* menuRoot = ps->create("menu");
+//     Storage* food = ps->insert(menuRoot, "food");
+//     ps->insert(food, "berat", {new Product("Ikan Goreng", "ID001", 12000)});
+//     Storage* drink = ps->insert(menuRoot, "drink");
+
+//     // ProductController* productController = new ProductController(ps, menuRoot);
+//     TransactionController* transactionController = new TransactionController(queue, menuRoot);
+
+//     // ps->printTree(menuRoot);
+//     transactionController->run();
+
+    
+//     // dst...
+//     return 0;
+// }
