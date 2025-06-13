@@ -77,7 +77,7 @@ public:
         Queue* current = head;
         cout << "Daftar Transaksi dalam Antrean:\n";
         while (current != nullptr) {
-            std::cout << "- Kode Transaksi: " << current->data.transactionId << ", Total: " << current->data.totalAmount << "\n";
+            cout << "- Kode Transaksi: " << current->label << ", Total: " << current->products.size() << "\n";
             current = current->next;
         }
     }
