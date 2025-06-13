@@ -10,9 +10,8 @@ int main(){
     // ntar semisal udah ada versi fixnya (dari sello) bisa diganti logicnya
 
     // membuat tree baru
-    ProductStorage* productStorage = new ProductStorage();
-
-    Storage* menuRoot;
+    Storage* menuRoot; //STRUKTUR
+    ProductStorage* productStorage = new ProductStorage(); //METHOOD
     menuRoot = productStorage->create("menu");
     Storage* food = productStorage->insert(menuRoot, "food");
     productStorage->insert(food, "berat", {new Product("Ikan Goreng", "ID001", 12000), new Product("Ikan Goreng Cipundung", "ID002", 10000)});
