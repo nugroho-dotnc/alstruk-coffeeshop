@@ -9,7 +9,7 @@ class ProductController{
         ProductView productView;
         Storage* menuRoot;
     public:
-        ProductController( Storage* root, ProductTree* productStorage ){
+        ProductController(Storage* root, ProductTree* productStorage ){
             this->menuRoot = root;
             this->productStorage = productStorage;
         }

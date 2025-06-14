@@ -8,6 +8,7 @@ private:
     Queue* head;
     Queue* tail;
     int maxSize;
+    int countQueue = 1;
 
 public:
     QueueList(int maxSize = 8) {
@@ -34,14 +35,15 @@ public:
         return total;
     }
 
+
     void enqueue(string label, vector<Product> products) {
         if (isFull()) {
             cout << "Antrean penuh, tidak bisa menambahkan transaksi!\n";
             return;
         }
-
-        Queue* newNode = new Queue(label, products);
-
+        string numToString = to_string(countQueue);
+        string queueId = "TR0" + numToString;
+        Queue* newNode = new Queue(queueId, label, products);
         if (isEmpty()) {
             head = tail = newNode;
         } else {
@@ -50,6 +52,7 @@ public:
         }
 
         cout << "Transaksi \"" << label << "\" berhasil ditambahkan ke antrean.\n";
+        countQueue++;
     }
 
     Queue* dequeue() {
@@ -77,7 +80,7 @@ public:
         Queue* current = head;
         cout << "Daftar Transaksi dalam Antrean:\n";
         while (current != nullptr) {
-            cout << "- Kode Transaksi: " << current->label << ", Total: " << current->products.size() << "\n";
+            cout << "- Kode Transaksi: " << current->queueId << ", Total: " << current->label << "\n";
             current = current->next;
         }
     }
