@@ -6,10 +6,12 @@ class Product{
         string productName;
         string idProduct;
         float price;
-        Product(const string& name, const string& id, float harga){
+        int stock;
+        Product(const string& name, const string& id, float harga, int stock){
             productName = name;
             idProduct = id;
             price = harga;
+            this->stock = stock;
         }
         // untuk inisiasi tanpa memasukkan parameter
         Product(){}

@@ -53,5 +53,6 @@
         "variant": "cpp",
         "cstdarg": "cpp",
         "queue": "cpp"
-    }
+    },
+    "C_Cpp.errorSquiggles": "enabled"
 }

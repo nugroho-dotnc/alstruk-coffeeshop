@@ -52,7 +52,7 @@ class ProductTree{
                     for (int i = 0; i < indent + 2; ++i) {
                         cout << "  "; 
                     }
-                    cout << p->idProduct << " - " << p->productName << " - " << p->price << endl;
+                    cout << p->idProduct << " - " << p->productName << " - " << p->price << "- Stock - " << p->stock << endl;
                 }
             }
             for (Storage* childNode : node->children) {

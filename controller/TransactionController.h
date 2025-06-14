@@ -2,6 +2,7 @@
 #include<iostream>
 #include "../model/Queue.h"
 #include "../model/Storage.h"
+#include "../model/OrderedProduct.h"
 #include "../data/ProductTree.h"
 #include "../data/QueueList.h"
 #include<vector>
@@ -17,6 +18,9 @@ class TransactionController {
         TransactionController(Queue *queue, Storage *productTree) {
             this->q = queue;
             this->ps = productTree;
+            vector<OrderedProduct> dummyProduct;
+            dummyProduct.push_back(OrderedProduct("a", "a", 10000, 10));
+            queueList->enqueue("a", dummyProduct, 10000);
         }
 
         void run() {
@@ -31,11 +35,10 @@ class TransactionController {
                     this->addTransaction();
                     break;
                 case 2:
-                    queueList->display();
+                    this->displayTransaction();
                     break;
                 case 3:
-                    productStorage->printTree(ps);
-                    // cout << "alsjf";
+                    this->displayProducts();
                     break;
                 default:
                     break;
@@ -43,13 +46,23 @@ class TransactionController {
             }
             
         }
+        
+        void displayProducts() {
+            system("cls");
+            productStorage->printTree(ps);
+            cout << "Klik enter untuk lanjut";
+            cin.ignore();
+            cin.get();
+        }
 
         void addTransaction() {
             string customerName;
             Product *tempProduct;
-            vector<Product> orderedProductList;
+            int qty;
+            vector<OrderedProduct> orderedProductList;
+            vector<float> subtotalList;
+            float total = 0;
             bool addTransactionProductsStatus = true;
-
 
             system("cls");
 
@@ -66,8 +79,12 @@ class TransactionController {
                 productStorage->printTree(ps);
                 tempProduct = productStorage->getProductById(ps); 
                 if(tempProduct != nullptr) {
+                    cout << "Masukan jumlah pembelian dari " + tempProduct->productName << " : ";
+                    cin >> qty;
+                    orderedProductList.push_back(OrderedProduct(tempProduct->productName, tempProduct->idProduct, tempProduct->price, qty));
+                    tempProduct->stock = tempProduct->stock - qty;
+
                     char addMoreProducts;
-                    orderedProductList.push_back(*tempProduct);
                     cout << "Berhasil menambahkan produk ke dalam transaksi, apakah anda ingin menambahkan produk lagi? (y/n)";
                     cin >> addMoreProducts;
                     cin.ignore();
@@ -87,8 +104,15 @@ class TransactionController {
             cout << "List Pesanan : " << endl;
 
             for(Product product : orderedProductList) {
-                cout << sequenceNumber++ << ". " << product.productName << " : Rp." << product.price << endl;
+                cout << sequenceNumber++ << ". " << product.productName << " : Rp." << product.price << " x " << qty << " : Rp. " << product.price * qty  << endl;
+                subtotalList.push_back(product.price * qty);
             }
+
+            for(int i = 0; i < subtotalList.size(); i++) {
+                total += subtotalList[i];
+            }
+            cout << "===================================" << endl;
+            cout << "Total : Rp." <<total<< endl;
         
             char continueTransaction;
             cout << "Lanjutkan untuk pembayaran (y/n)";
@@ -100,16 +124,42 @@ class TransactionController {
                 return;
             }
 
-            queueList->enqueue(customerName, orderedProductList);
+            queueList->enqueue(customerName, orderedProductList, total);
+        }
+
+        void displayTransaction() {
+            char actionChoose;
+            bool actionStatus = true;
+            // system("cls");
+            while(actionStatus) {
+            queueList->display();
+                cout << "Pilihan : " << endl;
+                cout << "[D] Tandai pesanan terdepan selesai (dequeu)\n[B] Kembali ke menu utama\n[V] Lihat detail transaksi" << endl;
+                cout << "Masukan pilihan : ";
+                cin >> actionChoose;
+                cin.ignore();
+                if (tolower(actionChoose) == 'd') {
+                    queueList->dequeue();
+                } else if(tolower(actionChoose) == 'b') {
+                    actionStatus = false;
+                } else if(tolower(actionChoose) == 'v') {
+                    string queueId;
+                    cout << "Masukan ID dari antrean : ";
+                    getline(cin, queueId);
+                    queueList->displayQueueById(queueId);
+                    // actionStatus = false;
+                } else {
+                    cout << "Menu tidak valid" << endl;
+                }
+            }
         }
 
 
-        
         int menu(){
+            system("cls");
             cout<< "===================================" << endl;
             cout<< "COFFEE SHOP MANAGEMENT SYSTEM" << endl;
             cout<< "===================================" << endl;
-            // cout<< "Selamat datang, " << name <<"! (MANAJER)"<< endl;
             cout<< "Pilihan Menu:" << endl;
             cout<< "[1] Buat Pesanan Baru" << endl;
             cout<< "[2] Lihat Antrean Pesanan" << endl;

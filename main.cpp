@@ -22,7 +22,7 @@ int main(){
     // inisialisasi data tree awal
     menuRoot = productStorage->create("menu");
     Storage* food = productStorage->insert(menuRoot, "food");
-    productStorage->insert(food, "berat", {new Product("Ikan Goreng", "ID001", 12000), new Product("Ikan Goreng Cipundung", "ID002", 10000)});
+    productStorage->insert(food, "berat", {new Product("Ikan Goreng", "ID001", 12000, 10), new Product("Ikan Goreng Cipundung", "ID002", 10000, 10)});
     Storage* drink = productStorage->insert(menuRoot, "drink");
 
     // inisialisasi controller

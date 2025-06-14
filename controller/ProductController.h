@@ -77,6 +77,8 @@ class ProductController{
                     cout << "Harga tidak valid! Ulangi." << endl;
                 }
             }
+            cout << "Stock Produk :";
+            cin >> product->stock;
             ListProduct.push_back(product);
             string opsi;
             cout << "Tambah produk lagi? (Y/N)";
@@ -122,6 +124,18 @@ class ProductController{
                             p->price = stof(hargaInput);
                         } catch (...) {
                             cout << "Input harga tidak valid. Harga tidak diubah." << endl;
+                        }
+                    }
+
+                    cout << "Stock lama : " << p->stock << endl;
+                    cout << "Stock baru (Enter untuk tidak mengubah): ";
+                    string stockInput;
+                    getline(cin, stockInput);
+                    if(!stockInput.empty()){
+                        try {
+                            p->stock = p->stock + stoi(stockInput);
+                        } catch (...) {
+                            cout << "Input stock tidak valid. Stock tidak diubah." << endl;
                         }
                     }
 
