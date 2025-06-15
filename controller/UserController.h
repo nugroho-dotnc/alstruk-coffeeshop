@@ -85,13 +85,12 @@ public:
 
     cout << "==============================================" <<endl;
     cout << "Masukkan Nama Lengkap: ";
-    cin.ignore();
     getline(cin, name);
     cout << "Masukkan Username: ";
-    cin >> username;
+    getline(cin, username);
     cout << "Masukkan Password: ";
-    cin >> password;
-
+    getline(cin, password);
+    
     while (true) {
       cout << "Masukkan Role (Admin/Kasir): ";
       cin >> role;
