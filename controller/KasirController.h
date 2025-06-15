@@ -87,8 +87,7 @@ class KasirController {
                 if(tempProduct != nullptr) {
                     cout << "Masukan jumlah pembelian dari " + tempProduct->productName << " : ";
                     cin >> qty;
-                    orderedProductList.push_back(OrderedProduct(tempProduct->productName, tempProduct->idProduct, tempProduct->price, qty));
-                    tempProduct->stock = tempProduct->stock - qty;
+                    orderedProductList.push_back(OrderedProduct(tempProduct, qty));
 
                     char addMoreProducts;
                     cout << "Berhasil menambahkan produk ke dalam transaksi, apakah anda ingin menambahkan produk lagi? (y/n)";
@@ -97,6 +96,7 @@ class KasirController {
                     if (tolower(addMoreProducts) != 'y') {
                         addTransactionProductsStatus = false;
                     }
+
                     system("cls");
                 } else {
                     cout << "Produk tidak ditemukan" << endl;
@@ -109,14 +109,15 @@ class KasirController {
             cout << "===================================" << endl;
             cout << "List Pesanan : " << endl;
 
-            for(Product product : orderedProductList) {
-                cout << sequenceNumber++ << ". " << product.productName << " : Rp." << product.price << " x " << qty << " : Rp. " << product.price * qty  << endl;
-                subtotalList.push_back(product.price * qty);
+            for(OrderedProduct product : orderedProductList) {
+                cout << sequenceNumber++ << ". " << product.product->productName << " : Rp." << product.product->price << " x " << qty << " : Rp. " << product.product->price * qty  << endl;
+                subtotalList.push_back(product.product->price * qty);
             }
 
             for(int i = 0; i < subtotalList.size(); i++) {
                 total += subtotalList[i];
             }
+
             cout << "===================================" << endl;
             cout << "Total : Rp." <<total<< endl;
         
@@ -128,6 +129,10 @@ class KasirController {
             if (tolower(continueTransaction) != 'y') {
                 cout << "Pesanan dibatalkan" << endl;
                 return;
+            }
+
+            for(OrderedProduct orderedProduct : orderedProductList) {
+                orderedProduct.product->stock = orderedProduct.product->stock - orderedProduct.qty;
             }
 
             queueList->enqueue(customerName, orderedProductList, total);

@@ -82,8 +82,8 @@ public:
                 cout << "List order : " << endl;
                 int countItem = 1;
                 for(OrderedProduct orderList : current->products) {
-                    cout << countItem << ". " << orderList.productName << " - Rp." << orderList.price << " x " << orderList.qty << " : " << orderList.price * orderList.qty << endl;
-                    total = orderList.price * orderList.qty;
+                    cout << countItem << ". " << orderList.product->productName << " - Rp." << orderList.product->price << " x " << orderList.qty << " : " << orderList.product->price * orderList.qty << endl;
+                    total = orderList.product->price * orderList.qty;
                     countItem++;
                 }
                 cout<< "===================================" << endl;
