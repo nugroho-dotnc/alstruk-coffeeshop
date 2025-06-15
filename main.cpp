@@ -35,9 +35,9 @@ int main(){
     user1.role =  "manajer";
    User user2;
     user2.name = "nugroho";
-    user2.username = "manajer";
-    user2.password = "manajer";
-    user2.role = "manajer";
+    user2.username = "kasir";
+    user2.password = "kasir";
+    user2.role = "kasir";
         
     ListUser.assign({user1, user2});
     string username, password;
