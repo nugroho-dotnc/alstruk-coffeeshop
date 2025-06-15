@@ -17,8 +17,6 @@ int main(){
 
     // deklarasi data
     Storage* menuRoot = nullptr;
-    Queue* queue = nullptr;
-    
     // inisialisasi data tree awal
     menuRoot = productStorage->create("menu");
     Storage* food = productStorage->insert(menuRoot, "food");
@@ -59,7 +57,7 @@ int main(){
                     ManagerController manager = ManagerController(user, productController);
                     manager.run();
                 }else{
-                    KasirController kasir = KasirController(queue, menuRoot);
+                    KasirController kasir = KasirController(menuRoot);
                     kasir.run();
                 }
             }

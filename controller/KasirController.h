@@ -11,14 +11,12 @@ using namespace std;
 
 class KasirController {
     private :
-        Queue *q; 
         Storage *ps;
         ProductTree *productStorage = new ProductTree();
         QueueList *queueList = new QueueList();
         KasirView kasirView;
     public : 
-        KasirController(Queue *queue, Storage *productTree) {
-            this->q = queue;
+        KasirController(Storage *productTree) {
             this->ps = productTree;
             vector<OrderedProduct> dummyProduct;
             dummyProduct.push_back(OrderedProduct("a", "a", 10000, 10));
