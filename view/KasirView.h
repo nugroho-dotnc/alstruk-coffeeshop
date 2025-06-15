@@ -3,11 +3,12 @@ using namespace std;
 
 class KasirView {
     public :
-        int menu() {
+        int menu(string name) {
             system("cls");
             cout<< "===================================" << endl;
             cout<< "COFFEE SHOP MANAGEMENT SYSTEM" << endl;
             cout<< "===================================" << endl;
+            cout<< "Selamat datang, " << name <<"! (KASIR)"<< endl;
             cout<< "Pilihan Menu:" << endl;
             cout<< "[1] Buat Pesanan Baru" << endl;
             cout<< "[2] Lihat Antrean Pesanan" << endl;

@@ -1,10 +1,8 @@
+#pragma once
 #include "../model/User.h"
+#include "../view/UserView.h"
 #include <iostream>
 #include <string>
-
-bool isValidRole(const string& role) {
-  return (role == "admin" || role == "kasir");
-}
 
 class UserController {
 private:
@@ -15,6 +13,12 @@ public:
     for (int i = 0; i < TABLE_SIZE; ++i) {
       table[i] = nullptr;
     }
+    insert("Admin Coffeeshop", "admin", "admin123", "admin");
+    insert("Kasir Coffeeshop", "kasir", "kasir123", "kasir");
+  }
+
+  bool isValidRole(const string& role) {
+  return (role == "admin" || role == "kasir");
   }
 
   int hashFunction(string username) {
@@ -81,13 +85,12 @@ public:
 
     cout << "==============================================" <<endl;
     cout << "Masukkan Nama Lengkap: ";
-    cin.ignore();
     getline(cin, name);
     cout << "Masukkan Username: ";
-    cin >> username;
+    getline(cin, username);
     cout << "Masukkan Password: ";
-    cin >> password;
-
+    getline(cin, password);
+    
     while (true) {
       cout << "Masukkan Role (Admin/Kasir): ";
       cin >> role;
@@ -195,25 +198,40 @@ public:
     cout << "==============================================" <<endl;
   }
 
-  void login() {
-    cout << "==============================================" <<endl;
-    cout << "\t\tLogin Page" <<endl;
-    cout << "==============================================" <<endl;
-    string username, password;
-    cout << "Masukkan username: ";
-    cin >> username;
-    cout << "Masukkan password: ";
-    cin >> password;
+  void run() {
+    UserView userChoice;
+    while (true) {
+      int choice = userChoice.showMenu();
+      switch (choice) {
+        case 1:
+          addUser();
+          break;
+        case 2:
+          editUser();
+          break;
+        case 3:
+          deleteUser();
+          break;
+        case 4:
+          displayAllUsers();
+          break;
+        case 5:
+          cout << "Terima kasih!" <<endl;
+          return;
+        default:
+          cout << "Pilihan tidak valid!" <<endl;
+      }
+    }
+  }
 
+  User* login(string username, string password) {
     User* user = search(username);
     if (user != nullptr && user->password == password) {
       cout << "==============================================" <<endl;
       cout << "Login berhasil!" << endl;
       cout << "==============================================" <<endl;
-    } else {
-        cout << "==============================================" <<endl;
-        cout << "Username atau password salah!" <<endl;
-        cout << "==============================================" <<endl;
-      }
+      return user;
+    }
+    return nullptr;
   }
 };

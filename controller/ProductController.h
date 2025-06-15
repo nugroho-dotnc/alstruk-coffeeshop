@@ -16,7 +16,9 @@ class ProductController{
         void run(){
             bool status = false;
             while(!status){
-                cout << "DATA PRODUCT:" << endl;
+                cout << "\n=====================\n";
+                cout << "     DATA PRODUK     \n";
+                cout << "=====================\n" << endl;
                 productStorage->printTree(menuRoot); 
                 productView.menu();
                 int opsi;
@@ -48,11 +50,14 @@ class ProductController{
                 }
             }
         }
+        
         void addProduct(){
+            system("cls");
+            productStorage->printTree(menuRoot);
             vector<Product*> ListProduct;
-            cout << "==============" << endl;
-            cout << "TAMBAH PRODUK" << endl;
-            cout << "==============" << endl;
+            cout << "\n======================" << endl;
+            cout << "     TAMBAH PRODUK    " << endl;
+            cout << "======================" << endl;
             Storage* category = productStorage->clusterSearch(menuRoot);
             if(category == nullptr){
                 cout << "Kategori tidak ditemukan! "<<endl;
@@ -76,8 +81,17 @@ class ProductController{
                     cout << "Harga tidak valid! Ulangi." << endl;
                 }
             }
-            cout << "Stock Produk :";
-            cin >> product->stock;
+            while (true) {
+                string stock;
+                cout << "Stock Product: ";
+                getline(cin, stock);
+                try {
+                    product->stock = stoi(stock);
+                    break;
+                } catch (...) {
+                    cout << "stock tidak valid! Ulangi." << endl;
+                }
+            }
             ListProduct.push_back(product);
             string opsi;
             cout << "Tambah produk lagi? (Y/N)";
@@ -91,10 +105,12 @@ class ProductController{
         }
         
         void editProduct(){
+             system("cls");
+            productStorage->printTree(menuRoot);
             string idProduct;
-            cout << "==============" << endl;
-            cout << "EDIT PRODUK" << endl;
-            cout << "==============" << endl;
+            cout << "\n======================" << endl;
+            cout << "      EDIT PRODUK     " << endl;
+            cout << "======================" << endl;
 
             Storage* category = productStorage->clusterSearch(menuRoot);
           
@@ -144,11 +160,12 @@ class ProductController{
             cout << "Produk dengan ID " << idProduct << " tidak ditemukan!" << endl;
         }
         void deleteProduct(){
+             system("cls");
+            productStorage->printTree(menuRoot);
             string  idProduct;
-            cout << "==============" << endl;
-            cout << "DELETE PRODUK" << endl;
-            cout << "==============" << endl;
-
+            cout << "\n======================" << endl;
+            cout << "     DELETE PRODUK    " << endl;
+            cout << "======================" << endl;
             Storage* category = productStorage->clusterSearch(menuRoot);
             if(category == nullptr){
                 cout << "Kategori  tidak ditemukan! "<<endl;
@@ -159,6 +176,8 @@ class ProductController{
             productStorage->deleteProduct(category, idProduct);
         }
         void addCategory() {
+             system("cls");
+            productStorage->printTree(menuRoot);
             int opsi;
             cout << "== TAMBAH KATEGORI ==" << endl;
             cout << "[1] Kategori Baru" << endl;
@@ -190,8 +209,12 @@ class ProductController{
             cout << "Kategori berhasil ditambahkan!" << endl;
         }
         void deleteCategory(){
+             system("cls");
+            productStorage->printTree(menuRoot);
             int opsi;
-            cout << "== DELETE CATEGORY ==" << endl;
+            cout << "\n========================" << endl;
+            cout << "     DELETE CATEGORY    " << endl;
+            cout << "========================" << endl;
             cout << "[1] Hapus Kategori" << endl;
             cout << "[2] Hapus Sub Kategori" << endl;
             cout << "[0] Kembali" << endl;
