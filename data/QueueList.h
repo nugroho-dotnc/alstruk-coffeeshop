@@ -1,5 +1,6 @@
 #pragma once
 #include "../model/Queue.h"
+#include "../model/OrderedProduct.h"
 #include <iostream>
 using namespace std; 
 
@@ -8,6 +9,7 @@ private:
     Queue* head;
     Queue* tail;
     int maxSize;
+    int countQueue = 1;
 
 public:
     QueueList(int maxSize = 8) {
@@ -34,14 +36,15 @@ public:
         return total;
     }
 
-    void enqueue(string label, vector<Product> products) {
+
+    void enqueue(string label, vector<OrderedProduct> products, float total) {
         if (isFull()) {
             cout << "Antrean penuh, tidak bisa menambahkan transaksi!\n";
             return;
         }
-
-        Queue* newNode = new Queue(label, products);
-
+        string numToString = to_string(countQueue);
+        string queueId = "TR0" + numToString;
+        Queue* newNode = new Queue(queueId, label, products, total);
         if (isEmpty()) {
             head = tail = newNode;
         } else {
@@ -50,6 +53,7 @@ public:
         }
 
         cout << "Transaksi \"" << label << "\" berhasil ditambahkan ke antrean.\n";
+        countQueue++;
     }
 
     Queue* dequeue() {
@@ -64,20 +68,57 @@ public:
             tail = nullptr;
         }
 
-        cout << "Transaksi \"" << removed->label << "\" dikeluarkan dari antrean.\n";
+        cout << "Transaksi \"" << removed->queueId << "\" telah selesai.\n";
         return removed;
     }
 
+    void displayQueueById(string queueId) {
+        Queue *current = head;
+        float total;
+        while(current != nullptr) {
+            if(current->queueId == queueId) {
+                system("cls");
+                cout << "Pesanan atas nama " << current->label << endl;
+                cout << "List order : " << endl;
+                int countItem = 1;
+                for(OrderedProduct orderList : current->products) {
+                    cout << countItem << ". " << orderList.productName << " - Rp." << orderList.price << " x " << orderList.qty << " : " << orderList.price * orderList.qty << endl;
+                    total = orderList.price * orderList.qty;
+                    countItem++;
+                }
+                cout<< "===================================" << endl;
+                cout << "Total : Rp." << total << endl;
+                cout<< "===================================" << endl;
+                cout << "Klik enter untuk lanjut";
+                cin.ignore();
+                cin.get();
+                return;
+            } else {
+                current = current->next;
+            }
+        }
+        system("cls");
+        cout << "Antrean tidak ditemukan" << endl;
+        cout << "Klik enter untuk lanjut";
+        cin.ignore();
+        cin.get();
+    }
+
     void display() {
+        system("cls");
+        int counter = 1;
         if (isEmpty()) {
             cout << "Antrean kosong!\n";
             return;
         }
 
         Queue* current = head;
-        cout << "Daftar Transaksi dalam Antrean:\n";
+        cout<< "===================================" << endl;
+        cout<< "ANTREAN PESANAN" << endl;
+        cout<< "===================================" << endl;
         while (current != nullptr) {
-            cout << "- Kode Transaksi: " << current->label << ", Total: " << current->products.size() << "\n";
+            cout << counter << ". " << "Pesanan " << current->queueId << " - Total Rp." << current->total <<endl;
+            counter++;
             current = current->next;
         }
     }

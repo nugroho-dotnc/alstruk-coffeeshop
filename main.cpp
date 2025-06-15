@@ -5,6 +5,7 @@
 #include "data/ProductTree.h"
 #include "controller/ProductController.h"
 #include "controller/ManagerController.h"
+#include "controller/TransactionController.h"
 using namespace std;
 vector<User> ListUser;
 int main(){
@@ -21,7 +22,7 @@ int main(){
     // inisialisasi data tree awal
     menuRoot = productStorage->create("menu");
     Storage* food = productStorage->insert(menuRoot, "food");
-    productStorage->insert(food, "berat", {new Product("Ikan Goreng", "ID001", 12000), new Product("Ikan Goreng Cipundung", "ID002", 10000)});
+    productStorage->insert(food, "berat", {new Product("Ikan Goreng", "ID001", 12000, 10), new Product("Ikan Goreng Cipundung", "ID002", 10000, 10)});
     Storage* drink = productStorage->insert(menuRoot, "drink");
 
     // inisialisasi controller
@@ -29,6 +30,7 @@ int main(){
 
     User user1 = User("nugroho", "manajer", "manajer", "manajer");
     User user2 = User("farrel", "kasir", "kasir123", "kasir");
+    
     ListUser.assign({user1, user2});
     string username, password;
     bool status1 = false;
@@ -45,7 +47,8 @@ int main(){
                     ManagerController manager = ManagerController(user, productController);
                     manager.run();
                 }else{
-                    cout << "GWEJ GA NGURUS YANG NI, WAHAHAHHA"<<endl;
+                    TransactionController t = TransactionController(queue, menuRoot);
+                    t.run();
                 }
             }
         }
