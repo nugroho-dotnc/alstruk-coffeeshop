@@ -28,9 +28,17 @@ int main(){
     // inisialisasi controller
     ProductController* productController = new ProductController(menuRoot, productStorage);
 
-    User user1 = User("nugroho", "manajer", "manajer", "manajer");
-    User user2 = User("farrel", "kasir", "kasir123", "kasir");
-    
+    User user1; 
+    user1.name = "nugroho";
+    user1.username = "manajer"; 
+    user1.password = "manajer";
+    user1.role =  "manajer";
+   User user2;
+    user2.name = "nugroho";
+    user2.username = "manajer";
+    user2.password = "manajer";
+    user2.role = "manajer";
+        
     ListUser.assign({user1, user2});
     string username, password;
     bool status1 = false;
@@ -40,10 +48,14 @@ int main(){
         cout << "Username: "; getline(cin, username);
         cout << "Password: "; getline(cin, password);
         for(User user : ListUser){
-            loggedIn = user.login(username, password);
+            if(user.username == username && user.password == password){
+                loggedIn = true;
+            }else{
+                loggedIn = false;
+            }
             if(loggedIn){
                 cout<< "LOGIN BERHASIL!" <<endl;
-                if(user.getRole() == "manajer"){
+                if(user.role == "manajer"){
                     ManagerController manager = ManagerController(user, productController);
                     manager.run();
                 }else{

@@ -160,6 +160,8 @@ class ProductTree{
         if(found){
             tempNode->children.erase(tempNode->children.begin() + position);
             cout << "Kategori dengan nama: " << label << " Berhasil dihapus!" << endl; 
+        }else{
+            cout << "Kategori dengan nama: " << label << " Tidak ditemukan!" << endl; 
         }
     }
     

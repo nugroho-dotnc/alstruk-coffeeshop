@@ -16,7 +16,7 @@ class ManagerController{
          ManagerView view = ManagerView();
          bool status1  = false;
          while(!status1){
-               int pilihan = view.menu(user.getName());
+               int pilihan = view.menu(user.name);
                switch (pilihan)
                {
                case 1:
