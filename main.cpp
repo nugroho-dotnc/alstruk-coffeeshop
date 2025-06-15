@@ -15,10 +15,10 @@ int main(){
 
     // inisiasi data (Tree, Queue, dll)
     ProductTree* productStorage = new ProductTree();
+    QueueList* queueList = new QueueList();
 
     // deklarasi data
     Storage* menuRoot = nullptr;
-    Queue* queue = nullptr;
     User* table[TABLE_SIZE];
     
     // inisialisasi data tree awal
@@ -27,14 +27,16 @@ int main(){
     productStorage->insert(food, "berat", {new Product("Ikan Goreng", "ID001", 12000, 10), new Product("Ikan Goreng Cipundung", "ID002", 10000, 10)});
     Storage* drink = productStorage->insert(menuRoot, "drink");
 
+    
     // inisialisasi controller
     ProductController* productController = new ProductController(menuRoot, productStorage);
     UserController* userController = new UserController();
-    KasirController* kasirController = new KasirController(queue, menuRoot);
+
 
     string username, password;
     bool status1 = false;
     while(!status1){
+        system("cls");
         User* user;
         cout << "==============================================" <<endl;
         cout << "\t\tLogin Page" <<endl;
@@ -47,12 +49,12 @@ int main(){
         user = userController->login(username, password);
         if(user != nullptr){
             if(user->role == "admin"){
-            ManagerController manager = ManagerController(user, productController, userController, kasirController);
-            manager.run();
+                ManagerController manager = ManagerController(user, productController, userController, queueList);
+                manager.run();
             } else{
-                KasirController kasir = KasirController(queue, menuRoot);
+                KasirController kasir = KasirController( menuRoot, user, queueList);
                 kasir.run();
-              }
+            }
         } else {
             cout << "==============================================" <<endl;
             cout << "Username atau password salah!" <<endl;

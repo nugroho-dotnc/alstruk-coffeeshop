@@ -14,11 +14,12 @@ public:
       table[i] = nullptr;
     }
     insert("Admin Coffeeshop", "admin", "admin123", "admin");
+    insert("Kasir Coffeeshop", "kasir", "kasir123", "kasir");
   }
 
   bool isValidRole(const string& role) {
   return (role == "admin" || role == "kasir");
-}
+  }
 
   int hashFunction(string username) {
     int hashValue = 0;

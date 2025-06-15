@@ -48,7 +48,10 @@ class ProductController{
                 }
             }
         }
+        
         void addProduct(){
+            system("cls");
+            productStorage->printTree(menuRoot);
             vector<Product*> ListProduct;
             cout << "==============" << endl;
             cout << "TAMBAH PRODUK" << endl;
@@ -100,6 +103,8 @@ class ProductController{
         }
         
         void editProduct(){
+             system("cls");
+            productStorage->printTree(menuRoot);
             string idProduct;
             cout << "==============" << endl;
             cout << "EDIT PRODUK" << endl;
@@ -153,6 +158,8 @@ class ProductController{
             cout << "Produk dengan ID " << idProduct << " tidak ditemukan!" << endl;
         }
         void deleteProduct(){
+             system("cls");
+            productStorage->printTree(menuRoot);
             string  idProduct;
             cout << "==============" << endl;
             cout << "DELETE PRODUK" << endl;
@@ -168,6 +175,8 @@ class ProductController{
             productStorage->deleteProduct(category, idProduct);
         }
         void addCategory() {
+             system("cls");
+            productStorage->printTree(menuRoot);
             int opsi;
             cout << "== TAMBAH KATEGORI ==" << endl;
             cout << "[1] Kategori Baru" << endl;
@@ -199,6 +208,8 @@ class ProductController{
             cout << "Kategori berhasil ditambahkan!" << endl;
         }
         void deleteCategory(){
+             system("cls");
+            productStorage->printTree(menuRoot);
             int opsi;
             cout << "== DELETE CATEGORY ==" << endl;
             cout << "[1] Hapus Kategori" << endl;

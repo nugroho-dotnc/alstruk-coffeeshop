@@ -11,18 +11,16 @@ using namespace std;
 
 class KasirController {
     private :
-        Queue *q; 
         Storage *ps;
         ProductTree *productStorage = new ProductTree();
-        QueueList *queueList = new QueueList();
+        QueueList *queueList;
         KasirView kasirView;
+        User* user;
     public : 
-        KasirController(Queue *queue, Storage *productTree) {
-            this->q = queue;
+        KasirController( Storage *productTree, User* user, QueueList* queueList) {
             this->ps = productTree;
-            vector<OrderedProduct> dummyProduct;
-            dummyProduct.push_back(OrderedProduct("a", "a", 10000, 10));
-            queueList->enqueue("a", dummyProduct, 10000);
+            this->user = user;
+            this->queueList = queueList;
         }
 
         void run() {
@@ -30,7 +28,7 @@ class KasirController {
             bool status = true;
             while (status)
             {
-                int menuSelection = kasirView.menu();
+                int menuSelection = kasirView.menu(user->name);
                 switch (menuSelection)
                 {
                 case 1:
@@ -42,7 +40,13 @@ class KasirController {
                 case 3:
                     this->displayProducts();
                     break;
+                case 0:
+                    cout << "Terimakasih, Sampai Jumpa Kembali!" << endl;
+                    status = false;
+                    user = nullptr;
+                    break;
                 default:
+                    cout<< "Input tidak valid, coba lagi!" << endl;
                     break;
                 }
             }
