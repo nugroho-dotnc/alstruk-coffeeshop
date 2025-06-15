@@ -50,13 +50,12 @@ class ProductController{
         }
         void addProduct(){
             vector<Product*> ListProduct;
-            string kategori;
             cout << "==============" << endl;
             cout << "TAMBAH PRODUK" << endl;
             cout << "==============" << endl;
             Storage* category = productStorage->clusterSearch(menuRoot);
             if(category == nullptr){
-                cout << "Kategori " << kategori << " tidak ditemukan! "<<endl;
+                cout << "Kategori tidak ditemukan! "<<endl;
                 return;
             }
             bool status = false;
@@ -88,17 +87,15 @@ class ProductController{
             }
             productStorage->addProduct(category, ListProduct);
         }
+        
         void editProduct(){
-            string kategori, idProduct;
+            string idProduct;
             cout << "==============" << endl;
             cout << "EDIT PRODUK" << endl;
             cout << "==============" << endl;
 
             Storage* category = productStorage->clusterSearch(menuRoot);
-            if(category == nullptr){
-                cout << "Kategori " << kategori << " tidak ditemukan! "<<endl;
-                return;
-            }
+          
 
             cout << "Id Produk yang akan diedit: ";
             getline(cin, idProduct);
@@ -133,14 +130,14 @@ class ProductController{
             cout << "Produk dengan ID " << idProduct << " tidak ditemukan!" << endl;
         }
         void deleteProduct(){
-            string kategori, idProduct;
+            string  idProduct;
             cout << "==============" << endl;
             cout << "DELETE PRODUK" << endl;
             cout << "==============" << endl;
 
             Storage* category = productStorage->clusterSearch(menuRoot);
             if(category == nullptr){
-                cout << "Kategori " << kategori << " tidak ditemukan! "<<endl;
+                cout << "Kategori  tidak ditemukan! "<<endl;
                 return;
             }
             cout << "Id Produk yang akan dihapus: ";
@@ -156,22 +153,18 @@ class ProductController{
             cout << "Pilihan anda: ";
             cin >> opsi;
             cin.ignore();
-            
+            string newCategory;
+            Storage* parentCategory = nullptr;
             if(opsi == 1){
-                string newCategory = productView.TextBox("Kategori Baru: ");
-                if(!(menuRoot->children.empty())){
-                    for(Storage* childNode : menuRoot->children){
-                        if(childNode->label == newCategory){
-                            cout << "Kategori dengan nama " << newCategory << " sudah ada!" <<endl;
-                            return;
-                        }
-                    }
-                }
-                productStorage->addCategory(menuRoot, newCategory);
+                parentCategory = menuRoot;
             }else if( opsi == 2){
-                Storage* parentCategory = productStorage->clusterSearch(menuRoot);
-                string newCategory = productView.TextBox("Kategori Baru: ");
-                if(!(parentCategory->children.empty())){
+                parentCategory = productStorage->clusterSearch(menuRoot);
+            }else{
+                cout << "kembali ke menu kelola product!" << endl;
+                return;
+            }
+            newCategory = productView.TextBox("Kategori Baru: ");   
+            if(!(parentCategory->children.empty())){
                     for(Storage* childNode : parentCategory->children){
                         if(childNode->label == newCategory){
                             cout << "Kategori dengan nama " << newCategory << " sudah ada!" <<endl;
@@ -179,10 +172,8 @@ class ProductController{
                         }
                     }
                 }
-                productStorage->addCategory(parentCategory, newCategory);
-            }else{
-                cout << "Kembali Ke Menu Kelola Product" << endl;
-            }
+            productStorage->addCategory(parentCategory, newCategory);
+            cout << "Kategori berhasil ditambahkan!" << endl;
         }
         void deleteCategory(){
             int opsi;
@@ -193,18 +184,18 @@ class ProductController{
             cout << "Pilihan anda: ";
             cin >> opsi;
             cin.ignore();
+            string category;
+            Storage* parentCategory = nullptr;
             if(opsi == 1){
-                string kategori;
-                cout << "masukkan kategori yang mau dihapus: " ;
-                getline(cin, kategori);
-                productStorage->deleteCategory(kategori, menuRoot);
+                parentCategory = menuRoot;
             }else if(opsi == 2){
                 cout << "masukkan parent kategori yang mau dihapus!" << endl;
-                Storage* parentCategory = productStorage->clusterSearch(menuRoot);
-                string category = productView.TextBox("kategori yang mau dihapus: ");
-                productStorage->deleteCategory(category, parentCategory);
+                parentCategory = productStorage->clusterSearch(menuRoot);
             }else{
                 cout << "Kembali Ke Menu Kelola Product" << endl;
+                return;
             }
+            category = productView.TextBox("kategori yang mau dihapus: ");
+            productStorage->deleteCategory(category, parentCategory);
         }
 };
