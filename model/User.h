@@ -1,8 +1,8 @@
 #pragma once
 #include <iostream>
 using namespace std;
-
-struct User {
+class User {
+  public:
     string name;
     string username;
     string password;
