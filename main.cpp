@@ -5,7 +5,8 @@
 #include "data/ProductTree.h"
 #include "controller/ProductController.h"
 #include "controller/ManagerController.h"
-#include "controller/TransactionController.h"
+#include "controller/KasirController.h"
+#include "controller/UserController.h"
 using namespace std;
 vector<User> ListUser;
 int main(){
@@ -18,6 +19,7 @@ int main(){
     // deklarasi data
     Storage* menuRoot = nullptr;
     Queue* queue = nullptr;
+    User* table[TABLE_SIZE];
     
     // inisialisasi data tree awal
     menuRoot = productStorage->create("menu");
@@ -27,62 +29,35 @@ int main(){
 
     // inisialisasi controller
     ProductController* productController = new ProductController(menuRoot, productStorage);
+    UserController* userController = new UserController();
+    KasirController* kasirController = new KasirController(queue, menuRoot);
 
-    User user1; 
-    user1.name = "nugroho";
-    user1.username = "manajer"; 
-    user1.password = "manajer";
-    user1.role =  "manajer";
-   User user2;
-    user2.name = "nugroho";
-    user2.username = "kasir";
-    user2.password = "kasir";
-    user2.role = "kasir";
-        
-    ListUser.assign({user1, user2});
     string username, password;
     bool status1 = false;
     while(!status1){
-        bool loggedIn = false;
-        cout << "LOGIN COFFEESHOP" << endl;
-        cout << "Username: "; getline(cin, username);
-        cout << "Password: "; getline(cin, password);
-        for(User user : ListUser){
-            if(user.username == username && user.password == password){
-                loggedIn = true;
-            }else{
-                loggedIn = false;
-            }
-            if(loggedIn){
-                cout<< "LOGIN BERHASIL!" <<endl;
-                if(user.role == "manajer"){
-                    ManagerController manager = ManagerController(user, productController);
-                    manager.run();
-                }else{
-                    TransactionController t = TransactionController(queue, menuRoot);
-                    t.run();
-                }
-            }
-        }
+        User* user;
+        cout << "==============================================" <<endl;
+        cout << "\t\tLogin Page" <<endl;
+        cout << "==============================================" <<endl;
+        string username, password;
+        cout << "Masukkan username: ";
+        getline(cin, username);
+        cout << "Masukkan password: ";
+        getline(cin, password);
+        user = userController->login(username, password);
+        if(user != nullptr){
+            if(user->role == "admin"){
+            ManagerController manager = ManagerController(user, productController, userController, kasirController);
+            manager.run();
+            } else{
+                KasirController kasir = KasirController(queue, menuRoot);
+                kasir.run();
+              }
+        } else {
+            cout << "==============================================" <<endl;
+            cout << "Username atau password salah!" <<endl;
+            cout << "==============================================" <<endl;
+          }
     }
     return 0;
 }
-
-// int main() {
-//     ProductStorage* ps = new ProductStorage();
-//     Queue* queue = nullptr;
-//     Storage* menuRoot = ps->create("menu");
-//     Storage* food = ps->insert(menuRoot, "food");
-//     ps->insert(food, "berat", {new Product("Ikan Goreng", "ID001", 12000)});
-//     Storage* drink = ps->insert(menuRoot, "drink");
-
-//     // ProductController* productController = new ProductController(ps, menuRoot);
-//     TransactionController* transactionController = new TransactionController(queue, menuRoot);
-
-//     // ps->printTree(menuRoot);
-//     transactionController->run();
-
-    
-//     // dst...
-//     return 0;
-// }

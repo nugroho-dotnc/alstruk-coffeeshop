@@ -1,3 +1,4 @@
+#pragma once
 #include <iostream>
 using namespace std;
 
@@ -8,7 +9,7 @@ struct User {
     string role;
 };
 
-const int TABLE_SIZE = 10;
+const int TABLE_SIZE = 50;
 
 // #pragma once
 // #include <iostream>
