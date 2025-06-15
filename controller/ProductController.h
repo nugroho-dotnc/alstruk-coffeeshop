@@ -16,7 +16,9 @@ class ProductController{
         void run(){
             bool status = false;
             while(!status){
-                cout << "DATA PRODUCT:" << endl;
+                cout << "\n=====================\n";
+                cout << "     DATA PRODUK     \n";
+                cout << "=====================\n" << endl;
                 productStorage->printTree(menuRoot); 
                 productView.menu();
                 int opsi;
@@ -53,9 +55,9 @@ class ProductController{
             system("cls");
             productStorage->printTree(menuRoot);
             vector<Product*> ListProduct;
-            cout << "==============" << endl;
-            cout << "TAMBAH PRODUK" << endl;
-            cout << "==============" << endl;
+            cout << "\n======================" << endl;
+            cout << "     TAMBAH PRODUK    " << endl;
+            cout << "======================" << endl;
             Storage* category = productStorage->clusterSearch(menuRoot);
             if(category == nullptr){
                 cout << "Kategori tidak ditemukan! "<<endl;
@@ -106,9 +108,9 @@ class ProductController{
              system("cls");
             productStorage->printTree(menuRoot);
             string idProduct;
-            cout << "==============" << endl;
-            cout << "EDIT PRODUK" << endl;
-            cout << "==============" << endl;
+            cout << "\n======================" << endl;
+            cout << "      EDIT PRODUK     " << endl;
+            cout << "======================" << endl;
 
             Storage* category = productStorage->clusterSearch(menuRoot);
           
@@ -161,10 +163,9 @@ class ProductController{
              system("cls");
             productStorage->printTree(menuRoot);
             string  idProduct;
-            cout << "==============" << endl;
-            cout << "DELETE PRODUK" << endl;
-            cout << "==============" << endl;
-
+            cout << "\n======================" << endl;
+            cout << "     DELETE PRODUK    " << endl;
+            cout << "======================" << endl;
             Storage* category = productStorage->clusterSearch(menuRoot);
             if(category == nullptr){
                 cout << "Kategori  tidak ditemukan! "<<endl;
@@ -211,7 +212,9 @@ class ProductController{
              system("cls");
             productStorage->printTree(menuRoot);
             int opsi;
-            cout << "== DELETE CATEGORY ==" << endl;
+            cout << "\n========================" << endl;
+            cout << "     DELETE CATEGORY    " << endl;
+            cout << "========================" << endl;
             cout << "[1] Hapus Kategori" << endl;
             cout << "[2] Hapus Sub Kategori" << endl;
             cout << "[0] Kembali" << endl;

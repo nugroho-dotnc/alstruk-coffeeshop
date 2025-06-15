@@ -38,6 +38,9 @@ class ManagerController{
               case 3:
                 system("cls");
                   queueList->display();
+                  cout << "Klik enter untuk lanjut";
+                  cin.ignore();
+                  cin.get();
                   break;
               case 0:
                 system("cls");
