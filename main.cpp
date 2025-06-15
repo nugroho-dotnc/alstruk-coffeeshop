@@ -5,7 +5,7 @@
 #include "data/ProductTree.h"
 #include "controller/ProductController.h"
 #include "controller/ManagerController.h"
-#include "controller/TransactionController.h"
+#include "controller/KasirController.h"
 using namespace std;
 vector<User> ListUser;
 int main(){
@@ -33,11 +33,11 @@ int main(){
     user1.username = "manajer"; 
     user1.password = "manajer";
     user1.role =  "manajer";
-   User user2;
+    User user2;
     user2.name = "nugroho";
-    user2.username = "manajer";
-    user2.password = "manajer";
-    user2.role = "manajer";
+    user2.username = "kasir";
+    user2.password = "kasir123";
+    user2.role = "kasir";
         
     ListUser.assign({user1, user2});
     string username, password;
@@ -59,8 +59,8 @@ int main(){
                     ManagerController manager = ManagerController(user, productController);
                     manager.run();
                 }else{
-                    TransactionController t = TransactionController(queue, menuRoot);
-                    t.run();
+                    KasirController kasir = KasirController(queue, menuRoot);
+                    kasir.run();
                 }
             }
         }
@@ -68,21 +68,3 @@ int main(){
     return 0;
 }
 
-// int main() {
-//     ProductStorage* ps = new ProductStorage();
-//     Queue* queue = nullptr;
-//     Storage* menuRoot = ps->create("menu");
-//     Storage* food = ps->insert(menuRoot, "food");
-//     ps->insert(food, "berat", {new Product("Ikan Goreng", "ID001", 12000)});
-//     Storage* drink = ps->insert(menuRoot, "drink");
-
-//     // ProductController* productController = new ProductController(ps, menuRoot);
-//     TransactionController* transactionController = new TransactionController(queue, menuRoot);
-
-//     // ps->printTree(menuRoot);
-//     transactionController->run();
-
-    
-//     // dst...
-//     return 0;
-// }
