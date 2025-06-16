@@ -29,6 +29,10 @@ public:
     return hashValue % TABLE_SIZE;
   }
 
+    bool isUsernameExists(const string& username) {
+    return search(username) != nullptr;
+  }
+
   void insert(string name, string username, string password, string role) {
     int index = hashFunction(username);
     User* newUser = new User{name, username, password, role};
@@ -88,6 +92,12 @@ public:
     getline(cin, name);
     cout << "Masukkan Username: ";
     getline(cin, username);
+
+    if (isUsernameExists(username)) {
+      cout << "Username sudah digunakan. Silakan pilih username lain." << endl;
+      return;
+    }
+
     cout << "Masukkan Password: ";
     getline(cin, password);
     
