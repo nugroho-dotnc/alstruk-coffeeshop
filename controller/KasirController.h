@@ -157,7 +157,6 @@ class KasirController {
                     cout << "Masukan ID dari antrean : ";
                     getline(cin, queueId);
                     queueList->displayQueueById(queueId);
-                    // actionStatus = false;
                 } else {
                     cout << "Menu tidak valid" << endl;
                 }
