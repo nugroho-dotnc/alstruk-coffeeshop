@@ -110,7 +110,7 @@ class KasirController {
             cout << "List Pesanan : " << endl;
 
             for(OrderedProduct product : orderedProductList) {
-                cout << sequenceNumber++ << ". " << product.product->productName << " : Rp." << product.product->price << " x " << qty << " : Rp. " << product.product->price * qty  << endl;
+                cout << sequenceNumber++ << ". " << product.product->productName << " : Rp." << product.product->price << " x " << product.qty << " : Rp. " << product.product->price *  product.qty << endl;
                 subtotalList.push_back(product.product->price * qty);
             }
 

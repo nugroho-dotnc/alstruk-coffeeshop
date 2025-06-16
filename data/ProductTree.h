@@ -188,6 +188,12 @@ class ProductTree{
     }
     Product* getProductById(Storage* menuRoot){
         Storage* parentProduct = clusterSearch(menuRoot);
+        cout << "DAFTAR PRODUK DENGAN KATEGORI " << parentProduct->label <<endl;
+        int nomor = 1;
+        for(Product* p: parentProduct->products){
+            cout << "[ " << nomor << " ] " << p->idProduct << " - " << p->productName << " - "  << p->price << " - stock: " << p->stock << endl;
+            nomor ++;
+        }
         string idProduct;
         cout << "Masukkan ID Produk: ";
         getline(cin, idProduct);
